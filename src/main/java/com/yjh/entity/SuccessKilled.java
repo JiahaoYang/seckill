@@ -2,14 +2,15 @@ package com.yjh.entity;
 
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 
 @Component
 public class SuccessKilled {
     private Long seckillId;
     private Long userPhone;
     private Short state;
-    private LocalDate createTime;
+    private Date createTime;
 
     private Seckill seckill;
 
@@ -47,11 +48,11 @@ public class SuccessKilled {
         this.state = state;
     }
 
-    public LocalDate getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDate createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 

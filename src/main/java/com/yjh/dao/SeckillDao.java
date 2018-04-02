@@ -4,15 +4,15 @@ import com.yjh.entity.Seckill;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Mapper
 public interface SeckillDao {
 
-    int reduceNumber(@Param("seckillId") Long seckillId, @Param("killTime") LocalDate killTime);
+    int reduceNumber(@Param("seckillId") Long seckillId, @Param("killTime") Date killTime);
 
     Seckill getById(Long seckillId);
 
-    List<Seckill> getAll(@Param("offset") int offset,@Param("limit") int limit);
+    List<Seckill> getAll(@Param("offset") int offset, @Param("limit") int limit);
 }

@@ -2,7 +2,8 @@ package com.yjh.entity;
 
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 
 @Component
 public class Seckill {
@@ -12,11 +13,11 @@ public class Seckill {
 
     private Integer number;
 
-    private LocalDate startTime;
+    private Date startTime;
 
-    private LocalDate endTime;
+    private Date endTime;
 
-    private LocalDate createTime;
+    private Date createTime;
 
     @Override
     public String toString() {
@@ -54,27 +55,27 @@ public class Seckill {
         this.number = number;
     }
 
-    public LocalDate getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDate getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDate endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    public LocalDate getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDate createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 }

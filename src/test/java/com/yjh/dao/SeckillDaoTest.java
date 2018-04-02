@@ -3,16 +3,11 @@ package com.yjh.dao;
 import com.yjh.entity.Seckill;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-
-import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,8 +19,6 @@ public class SeckillDaoTest {
     @Test
     public void reduceNumber() {
         long id = 1000;
-        LocalDate killTime = LocalDate.of(2018, 1, 1);
-        seckillDao.reduceNumber(id, killTime);
     }
 
     @Test
