@@ -14,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SeckillServiceImpl implements SeckillService {
@@ -41,7 +40,7 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public Exposer exposerSeckillUrl(long seckillId) {
-        Seckill seckill = getById(seckillId);
+        Seckill seckill = getById(seckillId);   //redis进行缓存优化
         if (seckill == null)
             return new Exposer(false, seckillId);
         Date start = seckill.getStartTime();
@@ -72,5 +71,32 @@ public class SeckillServiceImpl implements SeckillService {
             throw new RepeatKillException("repeat seckill");
         SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
         return new SeckillExcution(seckillId, SeckillStateEnum.SUCCESS, successKilled);
+    }
+
+    @Override
+    public SeckillExcution executeByProcedure(long seckillId, long userPhone, String md5) {
+        if (md5 == null || !md5.equals(getMd5(seckillId)))
+            return new SeckillExcution(seckillId, SeckillStateEnum.DATE_REWRITE);
+        Date killTime = new Date();
+        Map<String, Object> params = new HashMap<>();
+        params.put("seckillId", seckillId);
+        params.put("phone", userPhone);
+        params.put("killTime", killTime);
+        params.put("result", null);
+        try {
+            seckillDao.killByProcedure(params);
+            //获取result
+            int result = (int) params.getOrDefault("result", -2);
+            if (result == 1) {
+                SuccessKilled sk = successKilledDao.
+                        queryByIdWithSeckill(seckillId, userPhone);
+                return new SeckillExcution(seckillId, SeckillStateEnum.SUCCESS, sk);
+            } else {
+                return new SeckillExcution(seckillId, SeckillStateEnum.stateOf(result));
+            }
+        } catch (Exception e) {
+            return new SeckillExcution(seckillId, SeckillStateEnum.INNER_ERROR);
+        }
+
     }
 }

@@ -21,4 +21,6 @@ public interface SeckillService {
     SeckillExcution executeSeckill(long seckillId, long userPhone, String md5)
             throws SeckillException;
 
+    SeckillExcution executeByProcedure(long seckillId, long userPhone, String md5);
+
 }
